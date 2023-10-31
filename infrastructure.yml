@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: unless-stopped
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=root
+    #   - MONGO_INITDB_ROOT_PASSWORD=secret
+    networks:
+      - portalnetwork
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:/data/db
+
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    restart: unless-stopped
+    networks:
+      - portalnetwork
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 15692:15692
+
+networks:
+  portalnetwork:
+    name: portalnetwork
+
+volumes:
+  mongo:
+    driver: local
+  
